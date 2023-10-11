@@ -6,7 +6,7 @@
 
      // Схема окна
      layout = new QVBoxLayout(this);
-     QIcon icon("C:/Users/HomePC/Desktop/New folder (2)/TEST/images.png");
+     QIcon icon("C:/Users/HomePC/Desktop/QT PROJECTS/untitled/images.png");
      setWindowIcon(icon);
 
      // Текст "Каталог"
@@ -43,7 +43,7 @@
      deleteInputFileBtnG->addButton(yesRadioButton);
      deleteInputFileBtnG->addButton(noRadioButton);
 
-     yesRadioButton->setChecked(true);
+     noRadioButton->setChecked(true);
 
      layout->addWidget(yesRadioButton);
      layout->addWidget(noRadioButton);
@@ -100,13 +100,12 @@
      // Селектор времени таймера
      //---------------------------------
      timer = new QComboBox(this);
-     timer->addItem("1 минута");
-     timer->addItem("2 минуты");
-     timer->addItem("5 минут");
+     timer->addItem("1 сек.");
+     timer->addItem("2 сек.");
+     timer->addItem("5 сек.");
      layout->addWidget(timer);
 
-     // Вопрос для удаления входного файла
-     label = new QLabel("Свое значение", this);
+     label = new QLabel("Свое значение (сек.", this);
      layout->addWidget(label);
 
      // Свое значение
@@ -116,7 +115,7 @@
 
      // 8-бит значение
      //---------------------------------
-     label = new QLabel("8-байтное значение (0-F)", this);
+     label = new QLabel("8-бит значение (0-F)", this);
      layout->addWidget(label);
 
 
@@ -141,56 +140,7 @@
 
      // Размер окна
      resize(300, 200);
+     move(200, 100);
      setLayout(layout);
  }
 
- void MainWindow::handleButtonClick() {
-     QString directoryPath = inputFilePath->text();
-     //    std::cout << inputFilePath->text();
-     QDir dir(directoryPath);
-
-//      Check if the specified path is a directory
-     if (dir.exists()) {
-//          Set the QDir to list only files (not directories)
-         dir.setFilter(QDir::Files);
-
-         // List all files in the directory
-         QFileInfoList fileList = dir.entryInfoList();
-
-         QString filename;
-         QString extension = fileExtension->currentText();
-         // Iterate through the list of files
-         for (const QFileInfo &fileInfo : fileList) {
-             filename = fileInfo.fileName();
-             if(extension == filename.right(4)) {
-                 readFile(fileInfo.absoluteFilePath());
-             }
-         }
-     } else {
-         qDebug() << "Specified path is not a directory.";
-     }
-
-     QMessageBox::information(this, "Message", inputFilePath->text());
- }
-
- void MainWindow::readFile(QString filepath) {
-     QFile file(filepath);
-     qDebug() << filepath;
-     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-         qDebug() << "Failed to open";
-         return;
-     }
-
-     QString text;
-
-     QTextStream in(&file);
-     while (!in.atEnd()){
-         QString line = in.readLine();
-         text = line;
-         int res = line.toInt() ;
-//         qDebug() << line ^ eightBitInput->text().toInt();
-         qDebug() << res;
-     }
-
-     file.close();
- }

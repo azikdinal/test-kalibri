@@ -6,7 +6,8 @@
  #include <QPushButton>
 #include <QButtonGroup>
  #include <QMessageBox>
- #include <QIcon>
+#include <QIcon>
+#include <QChar>
  #include <QComboBox>
  #include <QVBoxLayout>
  #include <QRadioButton>
@@ -50,8 +51,9 @@
      QRadioButton *oneTimeStartRadioButton;
 
      QLineEdit *inputFilePath;
-     QComboBox *inputFilePathDrop;
      QLineEdit *outputFilePath;
+
+     QComboBox *inputFilePathDrop;
      QLineEdit *eightBitInput;
      QVBoxLayout *layout;
      QRegularExpressionValidator *validator;
